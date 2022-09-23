@@ -43,50 +43,54 @@ class _FavoritePageState extends State<FavoritePage> {
       );
     }
     if (state is FavoriteLoadedList) {
-      return ListView.builder(
-          shrinkWrap: true,
-          itemCount: state.cepModelList.length,
-          itemBuilder: (context, index) {
-            return Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '${state.cepModelList[index].cep}',
-                            style: FontsMePoupe.textNormal,
-                          ),
-                          GestureDetector(
-                            onTap: () async {
-                              context
-                                  .read<FavoritesCubit>()
-                                  .removeFavorite(index: index);
-                              context.read<FavoritesCubit>().getListFavorite();
-                            },
-                            child: const ImageIcon(
-                              AssetImage(IconsMePoupe.remove),
-                              color: ColorsMePoupe.primary,
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        state.cepModelList[index].adreesText(),
-                        style: FontsMePoupe.textSmall,
-                      )
-                    ],
+      return Expanded(
+        child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: state.cepModelList.length,
+            itemBuilder: (context, index) {
+              return Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0),
                   ),
-                ));
-          });
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '${state.cepModelList[index].cep}',
+                              style: FontsMePoupe.textNormal,
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                context
+                                    .read<FavoritesCubit>()
+                                    .removeFavorite(index: index);
+                                context
+                                    .read<FavoritesCubit>()
+                                    .getListFavorite();
+                              },
+                              child: const ImageIcon(
+                                AssetImage(IconsMePoupe.remove),
+                                color: ColorsMePoupe.primary,
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          state.cepModelList[index].adreesText(),
+                          style: FontsMePoupe.textSmall,
+                        )
+                      ],
+                    ),
+                  ));
+            }),
+      );
     }
 
     return const SizedBox();

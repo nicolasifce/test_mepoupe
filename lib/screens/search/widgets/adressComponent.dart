@@ -38,33 +38,47 @@ class AdressComponent extends StatelessWidget {
         ),
         BlocBuilder<FavoritesCubit, FavoritesState>(
           builder: (context, state) {
-            return MaterialButton(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(72.0),
-              ),
-              color: state is FavoriteLoaded
-                  ? ColorsMePoupe.whiteMedium
-                  : ColorsMePoupe.purpleGray,
-              onPressed: onTap,
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ImageIcon(
-                      const AssetImage(IconsMePoupe.favorite),
-                      color: state is FavoriteLoaded
-                          ? ColorsMePoupe.yellow
-                          : ColorsMePoupe.purpleLigth,
-                    ),
-                    Text(
-                      'Adicionar aos Favoritos',
-                      style: FontsMePoupe.textNormal.copyWith(
+            return Column(
+              children: [
+                MaterialButton(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(72.0),
+                  ),
+                  color: state is FavoriteLoaded
+                      ? ColorsMePoupe.whiteMedium
+                      : ColorsMePoupe.purpleGray,
+                  onPressed: onTap,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ImageIcon(
+                          const AssetImage(IconsMePoupe.favorite),
                           color: state is FavoriteLoaded
-                              ? ColorsMePoupe.primary
-                              : Colors.white),
+                              ? ColorsMePoupe.yellow
+                              : ColorsMePoupe.purpleLigth,
+                        ),
+                        Text(
+                          'Adicionar aos Favoritos',
+                          style: FontsMePoupe.textNormal.copyWith(
+                              color: state is FavoriteLoaded
+                                  ? ColorsMePoupe.primary
+                                  : Colors.white),
+                        ),
+                        const SizedBox(),
+                      ]),
+                ),
+                if (state is FavoriteError)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Text(
+                      state.message,
+                      style:
+                          FontsMePoupe.textNormal.copyWith(color: Colors.red),
                     ),
-                    const SizedBox(),
-                  ]),
+                  )
+              ],
             );
           },
         )
